@@ -233,13 +233,16 @@ function buildLevel(){
   for(let i=0;i<8;i++)col(176+i,i+1);col(184,8);row(178,183,4,'C');
   }
 }
-const DRAGON=[['#e63946','#a4161a'],['#2ec27e','#1a7f4f'],['#3a86ff','#1d4ed8'],['#9b5de5','#6a2c9e'],['#f4a261','#c2621a']];
+const PAL=[['#e63946','#a4161a','#ff8a94'],['#f77f00','#b35900','#ffb866'],['#5ec8f2','#2a8fb8','#b5ecff']];
+// Sprite pixelado del dragón (mirando a la izquierda): # cuerpo, e ojo
+const DRG_A=['...####...','..##e###..','.####.....','.##.......','..####....','...###....','...####...','..######..','.########.','.#########','..##..##..','..##..##..'];
+const DRG_B=['...####...','..##e###..','.####.....','..####....','...###....','...###....','...####...','..######..','.########.','.#########','...##.##..','..##...##.'];
 function spawnEnemies(){
   if(world===2){
-    enemies=[18,26,27,38,45,48,57,60,62,66,74,76,90,92,96,103,115,121,127,131,134,146,150,156,160,170,172].map((tx,i)=>({type:'dragon',col:DRAGON[i%5],hop:i%3===0,x:tx*T+2,y:12*T+6,w:28,h:26,vx:-1.1,vy:0,active:false,dead:false,squash:0,flip:false,onGround:false}));
+    enemies=[18,26,27,38,45,48,57,60,62,66,74,76,90,92,96,103,115,121,127,131,134,146,150,156,160,170,172].map((tx,i)=>({type:'dragon',col:PAL[i%3],hop:i%3===0,x:tx*T+1,y:12*T-4,w:30,h:36,vx:-1.1,vy:0,active:false,dead:false,squash:0,flip:false,onGround:false}));
     return;
   }
-  enemies=[20,28,29,44,52,58,74,77,90,96,100,113,118,122,143,147,154,165,172].map(tx=>({x:tx*T+4,y:12*T+8,w:26,h:24,vx:-1,vy:0,active:false,dead:false,squash:0,flip:false,onGround:false}));
+  enemies=[20,28,29,44,52,58,74,77,90,96,100,113,118,122,143,147,154,165,172].map((tx,i)=>({col:PAL[i%3],x:tx*T+4,y:12*T+8,w:26,h:24,vx:-1,vy:0,active:false,dead:false,squash:0,flip:false,onGround:false}));
 }
 
 /* ---------- Secret rooms ---------- */
@@ -600,28 +603,22 @@ function drawEnemy(e){
   if(e.type==='dragon'&&!e.squash){drawDragon(e,x,y);ctx.restore();return}
   if(e.squash){ctx.fillStyle=e.col?e.col[1]:'#7b3fa0';ctx.beginPath();ctx.ellipse(x+e.w/2,y+e.h-4,e.w/2+3,5,0,0,7);ctx.fill();ctx.restore();return}
   const wob=Math.sin(frame/6+e.x)*2;
-  ctx.fillStyle='#8e44ad';ctx.beginPath();
+  ctx.fillStyle=e.col[0];ctx.beginPath();
   ctx.moveTo(x-1,y+e.h);ctx.quadraticCurveTo(x-2,y-2+wob,x+e.w/2,y-2+wob);ctx.quadraticCurveTo(x+e.w+2,y-2+wob,x+e.w+1,y+e.h);ctx.fill();
-  ctx.fillStyle='#b77fd6';ctx.beginPath();ctx.ellipse(x+8,y+6+wob,4,3,-.5,0,7);ctx.fill();
+  ctx.fillStyle=e.col[2];ctx.beginPath();ctx.ellipse(x+8,y+6+wob,4,3,-.5,0,7);ctx.fill();
   ctx.fillStyle='#fff';ctx.fillRect(x+6,y+9,5,6);ctx.fillRect(x+15,y+9,5,6);
   ctx.fillStyle='#111';ctx.fillRect(x+(e.vx<0?6:8),y+11,3,4);ctx.fillRect(x+(e.vx<0?15:17),y+11,3,4);
   ctx.fillRect(x+5,y+7,7,2);ctx.fillRect(x+14,y+7,7,2);
   ctx.restore();
 }
 function drawDragon(e,x,y){
-  const [c,d]=e.col,f=e.vx<0?-1:1,cx=x+e.w/2,wing=Math.sin(frame/4+e.x)*5;
-  ctx.fillStyle=d;ctx.beginPath();ctx.moveTo(cx-f*6,y+e.h-9);ctx.lineTo(cx-f*22,y+e.h-16);ctx.lineTo(cx-f*17,y+e.h-11);ctx.lineTo(cx-f*6,y+e.h-3);ctx.fill();
-  ctx.beginPath();ctx.moveTo(cx-f*2,y+10);ctx.lineTo(cx-f*16,y-4+wing);ctx.lineTo(cx-f*12,y+6+wing/2);ctx.lineTo(cx-f*6,y+14);ctx.fill();
-  ctx.fillStyle=c;rr(x+3,y+8,e.w-6,e.h-8,9);ctx.fill();
-  ctx.fillStyle='#ffe8b0';ctx.beginPath();ctx.ellipse(cx+f*3,y+e.h-9,7,6,0,0,7);ctx.fill();
-  ctx.fillStyle=c;ctx.beginPath();ctx.arc(cx+f*7,y+8,9,0,7);ctx.fill();
-  ctx.fillStyle='#fff3d6';ctx.beginPath();ctx.moveTo(cx+f*2,y+1);ctx.lineTo(cx-f*1,y-7);ctx.lineTo(cx+f*6,y);ctx.fill();
-  ctx.beginPath();ctx.moveTo(cx+f*8,y);ctx.lineTo(cx+f*9,y-8);ctx.lineTo(cx+f*12,y+1);ctx.fill();
-  ctx.fillStyle='#fff';ctx.beginPath();ctx.ellipse(cx+f*10,y+7,3.5,4,0,0,7);ctx.fill();
-  ctx.fillStyle='#111';ctx.fillRect(cx+f*11-1,y+6,2,3);
-  ctx.fillStyle=d;ctx.fillRect(cx+f*14-1,y+11,2,2);
-  const st=e.onGround?Math.sin(frame/4+e.x)*2:0;
-  ctx.fillStyle=d;ctx.fillRect(x+6+st,y+e.h-4,7,4);ctx.fillRect(x+e.w-13-st,y+e.h-4,7,4);
+  const spr=Math.floor(frame/12+e.x/50)%2?DRG_A:DRG_B,P=3,flip=e.vx>0;
+  for(let r=0;r<spr.length;r++)for(let c=0;c<10;c++){
+    const ch=spr[r][c];if(ch==='.')continue;
+    const px=x+(flip?9-c:c)*P,py=y+r*P;
+    if(ch==='e'){ctx.fillStyle='#fff';ctx.fillRect(px,py,P,P);continue}
+    ctx.fillStyle=e.col[0];ctx.fillRect(px,py,P,P);
+  }
 }
 function drawHeart(cx,cy,s,col){
   ctx.fillStyle=col;ctx.beginPath();ctx.moveTo(cx,cy+s*.9);
