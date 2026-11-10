@@ -41,7 +41,7 @@ addEventListener('keydown',e=>{
   const k=km[e.code];
   if(k){if(k==='jump'&&!keys.jump)jumpPressed=true;keys[k]=true;e.preventDefault()}
   if(e.code==='Enter')startOrRestart();
-  if(e.code==='KeyP'&&state==='play')paused=!paused;
+  if(e.code==='KeyP'&&state==='play'){paused=!paused;if(paused)stopMusic();else if(!celeb)playTrack(inRoom?'secret':'level')}
 });
 addEventListener('keyup',e=>{const k=km[e.code];if(k)keys[k]=false});
 document.querySelectorAll('.btn').forEach(b=>{
@@ -113,11 +113,44 @@ function scheduleStep(i,t){
   if(s%8===0)drum(t,'k');if(s%8===4)drum(t,'s');if(s%2===0)drum(t,'h');
   if(s===14&&bar%2)drum(t,'k');
 }
-function startMusic(){
-  if(!ac||musicTimer)return;musicStep=0;musicNext=ac.currentTime+.1;
-  musicTimer=setInterval(()=>{while(musicNext<ac.currentTime+.15){scheduleStep(musicStep++,musicNext);musicNext+=S16}},40);
+/* Tema del nivel 1-1: original, shuffle alegre (swing en tresillos) */
+const LBPM=150,LBEAT=60/LBPM;
+const LMEL=[
+ 67,0,72,0,71,72,76,0,  74,72,69,0,64,0,69,71,  72,0,77,0,76,74,72,0,  74,0,0,71,67,0,62,63,
+ 64,67,72,67,76,0,74,72, 71,0,68,71,76,0,74,0,  72,69,65,69,72,0,68,0,  67,0,71,74,77,76,74,71,
+ 77,0,76,77,81,0,77,0,  76,0,72,0,67,0,72,76,  74,0,77,0,81,79,77,74,  79,0,0,0,71,74,77,79,
+ 81,79,77,0,76,77,79,0, 80,0,76,0,81,0,72,0,  74,78,81,0,79,78,74,0,  74,0,71,0,67,0,62,63];
+const LC={C:[60,64,67],Am:[57,60,64],F:[57,60,65],G:[55,59,62],E7:[56,59,62,64],Fm:[56,60,65],G7:[55,59,62,65],Dm7:[57,60,62,65],D7:[54,57,60,62]};
+const LR={C:36,Am:33,F:29,G:31,E7:28,Fm:29,G7:31,Dm7:26,D7:26};
+// acorde por medio compás
+const LPROG=['C','C','Am','Am','F','F','G','G', 'C','C','E7','E7','F','Fm','G7','G7',
+             'F','F','C','C','Dm7','Dm7','G7','G7', 'F','F','E7','Am','D7','D7','G7','G7'];
+function levelStep(i,t){
+  const bar=Math.floor(i/12)%16,s=i%12,beat=Math.floor(s/3),sub=s%3;
+  if(sub===1)return;
+  const e=beat*2+(sub?1:0),ch=LPROG[bar*2+(beat>1?1:0)];
+  const m=LMEL[bar*8+e];if(m)note(m,t,LBEAT*.55,'square',.045);
+  if(sub===0){note(LR[ch]+[0,7,12,7][beat],t,LBEAT*.8,'triangle',.16);
+    drum(t,beat%2?'s':'k');drum(t,'h')}
+  else{LC[ch].forEach(n=>note(n,t,LBEAT*.18,'square',.012));drum(t,'h')}
 }
-function stopMusic(){clearInterval(musicTimer);musicTimer=null}
+/* Tema de los cuartos secretos: arpegios misteriosos */
+const SDT=60/108/2,SPROG=[[57,60,64],[53,57,60],[50,53,57],[52,56,59]];
+function secretStep(i,t){
+  const bar=Math.floor(i/8)%4,s=i%8,c=SPROG[bar];
+  note([c[0],c[1],c[2],c[0]+12,c[2]+12,c[0]+12,c[2],c[1]][s]+12,t,SDT*1.6,'triangle',.07);
+  if(s===0)note(c[0]-12,t,SDT*7,'square',.025);
+  if(s===6&&bar%2)note(c[2]+24,t,SDT*2,'sine',.05);
+  if(s%4===0)drum(t,'h');
+}
+const TRACKS={victory:{dt:S16,step:scheduleStep},level:{dt:LBEAT/3,step:levelStep},secret:{dt:SDT,step:secretStep}};
+let curTrack=null;
+function playTrack(name){
+  if(!ac||(curTrack===name&&musicTimer))return;
+  stopMusic();curTrack=name;const tr=TRACKS[name];musicStep=0;musicNext=ac.currentTime+.1;
+  musicTimer=setInterval(()=>{while(musicNext<ac.currentTime+.15){tr.step(musicStep++,musicNext);musicNext+=tr.dt}},40);
+}
+function stopMusic(){clearInterval(musicTimer);musicTimer=null;curTrack=null}
 
 /* ---------- Fuegos artificiales ---------- */
 let fw=[],celeb=0;
@@ -207,11 +240,11 @@ function enterRoom(pp){
   roomExit={x:12,h:2};
   if(found.size===NSEC&&!treasure)items.push({type:'chest',x:8*T-17,y:9*T-26,w:34,h:26,open:0});
   const p=player;p.x=2*T+4;p.y=2*T+2;p.vx=0;p.vy=0;p.state='alive';p.onGround=false;
-  banner={text:'¡SECRETO '+found.size+'/'+NSEC+'!',t:120};sfx.secret();
+  banner={text:'¡SECRETO '+found.size+'/'+NSEC+'!',t:120};sfx.secret();playTrack('secret');
 }
 function exitRoom(){
   const s=mainSave;map=s.map;enemies=s.enemies;items=s.items;cam=s.cam;LW=W;inRoom=false;bumps=[];
-  const pp=s.pp,p=player;p.x=pp.x*T+T-p.w/2;p.y=(13-pp.h)*T;p.state='pipeUp';p.vx=0;p.vy=0;p.topY=(13-pp.h)*T;sfx.pipe();
+  const pp=s.pp,p=player;p.x=pp.x*T+T-p.w/2;p.y=(13-pp.h)*T;p.state='pipeUp';p.vx=0;p.vy=0;p.topY=(13-pp.h)*T;sfx.pipe();playTrack('level');
 }
 function pipeUnder(p){
   if(!p.onGround)return null;
@@ -250,7 +283,7 @@ function startLevel(){
   buildLevel();spawnEnemies();items=[];parts=[];popups=[];bumps=[];cam=0;time=300;tick=0;flagY=2*T+10;paused=false;
   LW=W;inRoom=false;mainSave=null;banner=null;stopMusic();fw=[];celeb=0;
   player={x:3*T,y:12*T-28,w:22,h:28,vx:0,vy:0,face:1,big:false,inv:0,state:'alive',onGround:false,coyote:0,buffer:0,anim:0,pt:0};
-  state='play';
+  state='play';playTrack('level');
 }
 function startOrRestart(){if(state==='title'||state==='over'||state==='win')newGame()}
 function addCoin(){coins++;score+=200;sfx.coin();if(coins>=100){coins-=100;lives++;popups.push({x:player.x,y:player.y-10,text:'1UP',t:50})}}
@@ -273,7 +306,7 @@ function hurt(){
 }
 function die(){
   const p=player;if(p.state==='dying')return;
-  p.state='dying';p.vy=-10;p.vx=0;deathT=0;state='dying';sfx.die();
+  stopMusic();p.state='dying';p.vy=-10;p.vx=0;deathT=0;state='dying';sfx.die();
 }
 
 function updatePlayer(){
@@ -283,7 +316,7 @@ function updatePlayer(){
   if(p.state==='flag'){
     if(p.y+p.h<12*T){p.y=Math.min(p.y+4,12*T-p.h)}
     if(flagY<11*T)flagY+=4;
-    if(p.y+p.h>=12*T&&flagY>=11*T){p.state='walk';p.face=1;celeb=1;startMusic()}
+    if(p.y+p.h>=12*T&&flagY>=11*T){p.state='walk';p.face=1;celeb=1;playTrack('victory')}
     return;
   }
   if(p.state==='walk'){
