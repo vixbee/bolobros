@@ -41,6 +41,7 @@ addEventListener('keydown',e=>{
   const k=km[e.code];
   if(k){if(k==='jump'&&!keys.jump)jumpPressed=true;keys[k]=true;e.preventDefault()}
   if(state==='map'){const n=mapAvail().length;if(e.code==='ArrowRight'||e.code==='KeyD')mapSel=(mapSel+1)%n;if(e.code==='ArrowLeft'||e.code==='KeyA')mapSel=(mapSel+n-1)%n}
+  if((state==='map'||state==='title')&&/^Key[A-Z]$/.test(e.code)){codeBuf=(codeBuf+e.code[3]).slice(-4);if(codeBuf==='BOLO'){codeBuf='';unlockAll()}}
   if(e.code==='Enter')startOrRestart();
   if(e.code==='KeyP'&&state==='play'){paused=!paused;if(paused)stopMusic();else if(!celeb)playTrack(bgTrack())}
 });
@@ -228,6 +229,8 @@ const WORLDNAMES=['MUNDO 1 · PRADERA','MUNDO 2 · DESIERTO','MUNDO 3 · OCÉANO
 let SAVE={unlocked:['1-1'],sec:{}};
 try{const d=JSON.parse(localStorage.getItem('bolobros_save')||'null');if(d&&d.unlocked)SAVE=d}catch(e){}
 function persist(){try{localStorage.setItem('bolobros_save',JSON.stringify(SAVE))}catch(e){}}
+let codeBuf='',mapMsgT=0,titleTaps=0;
+function unlockAll(){BUILT.forEach(unlock);mapMsgT=240;sfx.treasure();if(state==='title')newGame()}
 function unlock(l){if(!SAVE.unlocked.includes(l)){SAVE.unlocked.push(l);persist()}}
 const solidI=c=>c==='I';
 const solid=c=>'#BSsMPUXLR'.includes(c);
@@ -1125,8 +1128,10 @@ function drawMap(){
     if(!built)text('pronto',x,y+44,7,'center','#999');
   }
   text('← → elegir · Enter / toca para jugar',cv.width/2,cv.height-20,8,'center','#ccc');
+  if(mapMsgT>0){mapMsgT--;ctx.fillStyle='rgba(0,0,0,.75)';ctx.fillRect(40,200,cv.width-80,60);text('¡CÓDIGO SECRETO!',cv.width/2,225,12,'center','#ffd23f');text('Todos los niveles desbloqueados',cv.width/2,248,8,'center','#8ff0de')}
 }
 function mapTap(cx,cy){
+  if(cy<60){if(++titleTaps>=5){titleTaps=0;unlockAll()}return}titleTaps=0;
   for(const [id,nx,wy,secret] of MAPNODES){const x=80+nx*130,y=120+wy*120;
     if(Math.hypot(cx-x,cy-y)<34){const i=mapAvail().findIndex(n=>n[0]===id);if(i>=0){mapSel=i;startOrRestart()}}}
 }
