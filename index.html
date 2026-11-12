@@ -17,6 +17,9 @@ canvas{width:min(100vw,calc((100vh - 30px)*512/480));max-width:960px;aspect-rati
 #share{position:fixed;top:8px;left:50%;transform:translateX(-50%);display:none;gap:8px;z-index:5}
 #share button,#share a{font:600 14px system-ui;padding:9px 14px;border-radius:8px;border:0;background:#ffd23f;color:#222;text-decoration:none;cursor:pointer}
 #share a{background:#25d366;color:#fff}
+#share #xBtn{background:#000;border:1px solid #666}
+#share #fbBtn{background:#1877f2}
+#share{flex-wrap:wrap;justify-content:center;width:max-content;max-width:96vw}
 @media (pointer:coarse){#touch{display:flex}#help{display:none}}
 </style>
 </head>
@@ -25,7 +28,7 @@ canvas{width:min(100vw,calc((100vh - 30px)*512/480));max-width:960px;aspect-rati
   <canvas id="c"></canvas>
   <div id="help">← → mover · Espacio / ↑ saltar · ↓ entrar a tubería · Shift correr · P pausa · Enter empezar</div>
 </div>
-<div id="share"><button id="shareBtn">📋 Copiar resultado</button><a id="waBtn" target="_blank" rel="noopener">WhatsApp</a></div>
+<div id="share"><button id="shareBtn">📋 Copiar resultado</button><a id="waBtn" target="_blank" rel="noopener">WhatsApp</a><a id="xBtn" target="_blank" rel="noopener">X</a><a id="fbBtn" target="_blank" rel="noopener">Facebook</a></div>
 <div id="touch">
   <div class="pad"><div class="btn" data-k="left">◀</div><div class="btn" data-k="down">▼</div><div class="btn" data-k="right">▶</div></div>
   <div class="pad"><div class="btn" data-k="run">B</div><div class="btn" data-k="jump">A</div></div>
@@ -246,7 +249,9 @@ function medal(name){medalMsg='★ ¡MEDALLA: '+name+'! ★';medalT=220;sfx.meda
 function stompCombo(e){const p=player;p.combo=(p.combo||0)+1;p.comboT=200;const c=p.combo,pts=Math.min(1600,100*2**(c-1));score+=pts;sfx.stomp();
   if(c>1)tone(330*Math.pow(1.122,c*2),.16,'square',.06);popup(e.x,e.y-10,c>1?'x'+c+' '+pts:''+pts);
   if(c===6){lives++;popup(e.x,e.y-28,'1UP');sfx.power()}}
-function shareText(){return '🎮 Bolo Bros: llegué al mundo '+lvl+' con '+score+' puntos y '+medalCount()+'/27 medallas ★. ¿Me superas? https://bolobros.netlify.app/'}
+const SHARE_URL='https://bolobros.netlify.app/';
+function shareMsg(){return '🎮 Bolo Bros: llegué al mundo '+lvl+' con '+score+' puntos y '+medalCount()+'/27 medallas ★. ¿Me superas?'}
+function shareText(){return shareMsg()+' '+SHARE_URL}
 function persist(){try{localStorage.setItem('bolobros_save',JSON.stringify(SAVE))}catch(e){}}
 let codeBuf='',mapMsgT=0,titleTaps=0;
 function unlockAll(){BUILT.forEach(unlock);mapMsgT=240;sfx.treasure();if(state==='title')newGame()}
@@ -1227,7 +1232,7 @@ function mapTap(cx,cy){
 const shareEl=document.getElementById('share'),shareBtn=document.getElementById('shareBtn'),waBtn=document.getElementById('waBtn');
 let shareOn=false;
 function updateShare(){const on=state==='over'||state==='clear';if(on===shareOn)return;shareOn=on;shareEl.style.display=on?'flex':'none';
-  if(on){waBtn.href='https://wa.me/?text='+encodeURIComponent(shareText());shareBtn.textContent='📋 Copiar resultado'}}
+  if(on){waBtn.href='https://wa.me/?text='+encodeURIComponent(shareText());document.getElementById('xBtn').href='https://twitter.com/intent/tweet?text='+encodeURIComponent(shareMsg())+'&url='+encodeURIComponent(SHARE_URL);document.getElementById('fbBtn').href='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(SHARE_URL)+'&quote='+encodeURIComponent(shareMsg());shareBtn.textContent='📋 Copiar resultado'}}
 shareBtn.addEventListener('click',async()=>{const t=shareText();let ok=false;
   try{await navigator.clipboard.writeText(t);ok=true}catch(e){try{const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();ok=document.execCommand('copy');a.remove()}catch(e2){}}
   shareBtn.textContent=ok?'✅ ¡Copiado!':'No se pudo copiar'});
