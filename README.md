@@ -37,6 +37,13 @@ En el mapa de mundos se elige nivel con ← → y Enter, o tocando el nivel.
 - **Estrella:** 14 segundos de invencibilidad, con música propia.
 - **Baya verde 1UP:** una vida extra (solo en los mundos secretos).
 
+### Medallas, combos y puntos de control
+
+- **Medallas:** cada nivel normal tiene 3 (27 en total): terminar el nivel, juntar las 3 monedas grandes con la letra B y encontrar los 3 cuartos secretos. Se ven como estrellas en el mapa.
+- **Combos:** pisar enemigos seguidos sin tocar el suelo duplica los puntos cada vez (100, 200, 400…) con un sonido que sube de tono; el sexto da una vida.
+- **Punto de control:** una bandera a mitad de nivel; si pierdes una vida reapareces ahí.
+- **Compartir:** al terminar la partida aparecen botones para copiar el resultado o enviarlo por WhatsApp.
+
 ### Enemigos con reglas especiales
 
 - **Cactus, medusas y erizos** tienen espinas: no se pueden pisar, solo se vencen con la estrella.
