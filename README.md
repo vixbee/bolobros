@@ -14,6 +14,7 @@ Bolo es un bichito turquesa con bufanda roja y una **B** en el pecho. Corre, sal
 | Saltar / nadar (brazada) | Espacio, ↑, W o Z | A |
 | Correr | Shift o X | B |
 | Entrar a una tubería | ↓ o S | ▼ |
+| Lanzar estaca (mundo 5) | F, C o E | ⚔ |
 | Pausa | P | — |
 | Empezar / confirmar | Enter | Tocar la pantalla |
 
@@ -21,7 +22,7 @@ En el mapa de mundos se elige nivel con ← → y Enter, o tocando el nivel.
 
 ## Contenido
 
-**16 niveles: 12 normales y 4 mundos secretos.**
+**20 niveles: 15 normales y 5 mundos secretos.**
 
 | Mundo | Niveles | Ambiente | Enemigos | Jefe |
 |---|---|---|---|---|
@@ -29,18 +30,20 @@ En el mapa de mundos se elige nivel con ← → y Enter, o tocando el nivel.
 | 2 · Desierto | 2‑1, 2‑2, 2‑3 | Día, atardecer, noche | Escorpiones, cactus andantes, buitres | Rey Escorpión |
 | 3 · Océano | 3‑1, 3‑2, 3‑3 | Bajo el agua, corrientes, profundidades | Peces, medusas, erizos, tiburones | Pulpo Gigante |
 | 4 · Nieve | 4‑1, 4‑2, 4‑3 | Día, atardecer, noche; el hielo resbala | Pingüinos, erizos de hielo, búhos, muñecos de nieve que lanzan bolas | Yeti de las Nieves |
-| Secretos | 0‑1, 0‑2, 0‑3, 0‑4 | Sin enemigos, monedas dobles, vidas extra | — | — |
+| 5 · Tinieblas | 5‑1, 5‑2, 5‑3 | Cementerio, luna de sangre, castillo | Calaveras, murciélagos, fantasmas, vampiros | Conde Colmillo |
+| Secretos | 0‑1, 0‑2, 0‑3, 0‑4, 0‑5 | Sin enemigos, monedas dobles, vidas extra | — | — |
 
 ### Objetos
 
 - **Monedas:** 100 monedas dan una vida.
 - **Baya roja:** Bolo crece, rompe ladrillos y aguanta un golpe.
 - **Estrella:** 14 segundos de invencibilidad, con música propia.
+- **Estaca:** se recoge al inicio de cada nivel del mundo 5 y se lanza con F (o ⚔ en el celular). Es lo único que vence a fantasmas y vampiros.
 - **Baya verde 1UP:** una vida extra (solo en los mundos secretos).
 
 ### Medallas, combos y puntos de control
 
-- **Medallas:** cada nivel normal tiene 3 (36 en total): terminar el nivel, juntar las 3 monedas grandes con la letra B y encontrar los 3 cuartos secretos. Se ven como estrellas en el mapa.
+- **Medallas:** cada nivel normal tiene 3 (45 en total): terminar el nivel, juntar las 3 monedas grandes con la letra B y encontrar los 3 cuartos secretos. Se ven como estrellas en el mapa.
 - **Combos:** pisar enemigos seguidos sin tocar el suelo duplica los puntos cada vez (100, 200, 400…) con un sonido que sube de tono; el sexto da una vida.
 - **Punto de control:** una bandera a mitad de nivel; si pierdes una vida reapareces ahí.
 - **Compartir:** al terminar la partida aparecen botones para copiar el resultado o enviarlo por WhatsApp.
@@ -55,7 +58,7 @@ En el mapa de mundos se elige nivel con ← → y Enter, o tocando el nivel.
 
 - **Tuberías secretas:** en cada nivel normal, 3 tuberías elegidas al azar en cada partida tienen un brillo intermitente. Con ↓ llevan a cuartos donde las monedas forman frases misteriosas.
 - **Cofre del tesoro:** aparece en el tercer cuarto secreto de un nivel y da +5 vidas.
-- **Warp zones:** hay rutas ocultas con un bloque invisible o una cámara escondida cerca del final de los niveles 1‑3, 2‑2, 3‑2 y 4‑2. Llevan a los mundos secretos 0‑1, 0‑2, 0‑3 y 0‑4.
+- **Warp zones:** hay rutas ocultas con un bloque invisible o una cámara escondida cerca del final de los niveles 1‑3, 2‑2, 3‑2, 4‑2 y 5‑2. Llevan a los mundos secretos 0‑1, 0‑2, 0‑3, 0‑4 y 0‑5.
 - **Código secreto:** escribir `BOLO` en la portada o en el mapa (o tocar 5 veces el título "MAPA DE MUNDOS" en el celular) desbloquea todos los niveles.
 
 El avance (niveles desbloqueados y secretos encontrados) se guarda en el navegador con `localStorage`.
