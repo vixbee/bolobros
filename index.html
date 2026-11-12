@@ -77,6 +77,8 @@ const sfx={
   brk:()=>tone(160,.18,'sawtooth',.08,40),
   power:()=>seq([523,659,784,1047,1319],60,.09),
   appear:()=>seq([392,523,659],60,.08),
+  shark:()=>tone(70,.26,'sawtooth',.09,115),
+  sleep:()=>tone(620,.6,'sine',.07,180),
   swim:()=>tone(520,.08,'sine',.04,820),
   fire:()=>tone(180,.22,'sawtooth',.04,520),
   pipe:()=>{tone(400,.12,'square',.06,120);setTimeout(()=>tone(400,.12,'square',.06,120),160);setTimeout(()=>tone(400,.12,'square',.06,120),320)},
@@ -402,7 +404,7 @@ function mkEnemy(type,tx,i){
     case 'vulture':return fl((5+i%3)*T,30,.05,5*T,34,22,-1.3);
     case 'fish':return fl((4+i%7)*T,14,.06,6*T,30,20,-1.1);
     case 'jelly':return Object.assign(fl((4+i%5)*T,50,.025,T,26,30,-.2),{spiky:true});
-    case 'shark':return fl((5+i%4)*T,20,.02,8*T,64,30,-1.6);
+    case 'shark':return Object.assign(fl((5+i%4)*T,20,.02,8*T,64,30,-1.6),{sc:1,chase:0,tired:0,asleep:0});
     case 'urchin':return Object.assign(b,{stat:true,spiky:true,y:12*T+8,w:28,h:24,vx:0});
     default:return Object.assign(b,{y:12*T+8,w:26,h:24});
   }
@@ -583,6 +585,23 @@ function updatePlayer(){
   }
 }
 
+function updateShark(e){
+  const p=player;
+  if(e.asleep){e.sc=Math.max(.55,e.sc-.015);e.x+=e.vx>0?.9:-.9;e.y-=.45;if(--e.asleep<=0||e.y<-50)e.gone=true;return}
+  const dx=p.x+p.w/2-(e.x+e.w/2),dy=p.y+p.h/2-(e.y+e.h/2);
+  if(e.tired>0){e.tired--;e.x+=e.vx}
+  else if(Math.abs(dx)<7*T&&Math.abs(dy)<5*T&&p.state==='alive'){
+    e.vx=dx<0?-1.9:1.9;e.x+=e.vx;e.y+=Math.sign(dy)*Math.min(1.1,Math.abs(dy)*.08);
+    if(e.chase++%34===0)sfx.shark();
+    if(e.chase>200){e.chase=0;e.tired=160;e.vx=-Math.sign(e.vx)*1.1}
+  } else {e.chase=0;e.vx=(e.vx<0?-1:1)*1.6;e.x+=e.vx;if(e.x<e.hx-e.range)e.vx=1.6;if(e.x>e.hx+e.range)e.vx=-1.6;e.y+=Math.sin(frame*.03+e.ph)*.4}
+  e.y=Math.max(2*T,Math.min(11*T,e.y));
+  if(p.state==='alive'&&overlap(p,e)){
+    const f=e.vx<0?-1:1,behind=dx*f<-8;
+    if(p.star>0||behind){e.asleep=280;e.dead=true;score+=500;popup(e.x+20,e.y-10,'Zzz 500');sfx.sleep()}
+    else if(p.inv<=0)hurt();
+  }
+}
 function updateEnemies(){
   const p=player;
   for(const e of enemies){
@@ -590,6 +609,7 @@ function updateEnemies(){
     if(e.flip){e.vy+=.5;e.y+=e.vy;e.x+=e.vx;if(e.y>H*T+50)e.gone=true;continue}
     if(e.squash){if(--e.squash===0)e.gone=true;continue}
     if(!e.active){if(e.x<cam+VW*T+T)e.active=true;else continue}
+    if(e.type==='shark'){updateShark(e);continue}
     if(e.fly){e.x+=e.vx;if(e.x<e.hx-e.range)e.vx=Math.abs(e.vx);if(e.x>e.hx+e.range)e.vx=-Math.abs(e.vx);e.y=e.by+Math.sin(frame*e.sp+e.ph)*e.amp}
     else if(!e.stat){e.vy=Math.min(e.vy+.5,10);
     e.x+=e.vx;if(collideX(e))e.vx*=-1;
@@ -886,6 +906,7 @@ function drawPlayer(){
   ctx.fillRect(x-2,sy,w+4,5);
   const flap=Math.sin(frame/5)*3;
   ctx.beginPath();ctx.moveTo(x+w/2-f*8,sy);ctx.lineTo(x+w/2-f*20,sy+6+flap);ctx.lineTo(x+w/2-f*16,sy+10+flap);ctx.lineTo(x+w/2-f*6,sy+5);ctx.fill();
+  ctx.font=`bold ${p.big?14:9}px system-ui`;ctx.textAlign='center';ctx.fillStyle='#fff';ctx.fillText('B',x+w/2+f*2+.8,y+(p.big?39:h-4)+.8);ctx.fillStyle='#e63946';ctx.fillText('B',x+w/2+f*2,y+(p.big?39:h-4));
   ctx.restore();
 }
 function drawEnemy(e){
@@ -991,13 +1012,14 @@ function drawFish(e,x,y){
   ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(cx+f*7,y+8,3.5,0,7);ctx.fill();ctx.fillStyle='#111';ctx.beginPath();ctx.arc(cx+f*8,y+8,1.8,0,7);ctx.fill();
 }
 function drawShark(e,x,y){
-  const f=e.vx<0?-1:1,cx=x+32,cy=y+16,o=(Math.sin(frame/8+e.ph)+1)/2*7,L=(a,b,t)=>a+(b-a)*t;
-  ctx.fillStyle='#5b7c99';ctx.beginPath();ctx.moveTo(cx-f*24,cy);ctx.lineTo(cx-f*37,cy-13+Math.sin(frame/6)*2);ctx.lineTo(cx-f*32,cy);ctx.lineTo(cx-f*37,cy+11);ctx.fill();
+  const f=e.vx<0?-1:1,cx=x+32,cy=y+16,A=e.asleep,c1=A?'#777':'#5b7c99',c2=A?'#9d9d9d':'#6f93b3',o=A?0:(Math.sin(frame/(e.chase?3:8)+e.ph)+1)/2*7,L=(a,b,t)=>a+(b-a)*t;
+  if(A){ctx.translate(cx,cy);ctx.scale(e.sc,e.sc);ctx.translate(-cx,-cy)}
+  ctx.fillStyle=c1;ctx.beginPath();ctx.moveTo(cx-f*24,cy);ctx.lineTo(cx-f*37,cy-13+Math.sin(frame/6)*2);ctx.lineTo(cx-f*32,cy);ctx.lineTo(cx-f*37,cy+11);ctx.fill();
   ctx.beginPath();ctx.moveTo(cx-f*4,cy-10);ctx.lineTo(cx-f*11,cy-23);ctx.lineTo(cx+f*7,cy-10);ctx.fill();
-  ctx.fillStyle='#6f93b3';ctx.beginPath();ctx.ellipse(cx,cy,29,12,0,0,7);ctx.fill();
+  ctx.fillStyle=c2;ctx.beginPath();ctx.ellipse(cx,cy,29,12,0,0,7);ctx.fill();
   ctx.fillStyle='#e8f1f7';ctx.beginPath();ctx.ellipse(cx+f*4,cy+5,21,6,0,0,7);ctx.fill();
-  ctx.fillStyle='#5b7c99';ctx.beginPath();ctx.moveTo(cx,cy+6);ctx.lineTo(cx-f*9,cy+17);ctx.lineTo(cx+f*6,cy+8);ctx.fill();
-  ctx.strokeStyle='#4a6680';ctx.lineWidth=1.5;for(let k=0;k<3;k++){ctx.beginPath();ctx.moveTo(cx+f*(8-k*3),cy-5);ctx.lineTo(cx+f*(6-k*3),cy+2);ctx.stroke()}
+  ctx.fillStyle=c1;ctx.beginPath();ctx.moveTo(cx,cy+6);ctx.lineTo(cx-f*9,cy+17);ctx.lineTo(cx+f*6,cy+8);ctx.fill();
+  ctx.strokeStyle=c1;ctx.lineWidth=1.5;for(let k=0;k<3;k++){ctx.beginPath();ctx.moveTo(cx+f*(8-k*3),cy-5);ctx.lineTo(cx+f*(6-k*3),cy+2);ctx.stroke()}
   const mx=cx+f*29,jx=cx+f*12,jy=cy+3,uy=cy+1-o,ly=cy+3+o;
   ctx.fillStyle='#5a1020';ctx.beginPath();ctx.moveTo(mx,uy);ctx.lineTo(jx,jy);ctx.lineTo(mx,ly);ctx.fill();
   ctx.fillStyle='#fff';
@@ -1007,6 +1029,7 @@ function drawShark(e,x,y){
   ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(cx+f*17,cy-4,3.5,0,7);ctx.fill();
   ctx.fillStyle='#111';ctx.beginPath();ctx.arc(cx+f*18,cy-4,2,0,7);ctx.fill();
   ctx.save();ctx.translate(cx+f*17,cy-8);ctx.rotate(f*.35);ctx.fillRect(-5,-1,10,2.5);ctx.restore();
+  if(A){ctx.fillStyle=c2;ctx.beginPath();ctx.arc(cx+f*17,cy-5,6,0,7);ctx.fill();ctx.fillStyle='#333';ctx.fillRect(cx+f*17-3,cy-4,6,1.5);text('Zzz',cx,cy-22-Math.sin(frame/10)*3,9,'center','#dfe9ff')}
 }
 function drawJelly(e,x,y){
   const q=Math.sin(frame/10+e.ph)*2;ctx.strokeStyle='rgba(255,170,220,.85)';ctx.lineWidth=2;
