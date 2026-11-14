@@ -13,7 +13,7 @@ Bolo es un bichito turquesa con bufanda roja y una **B** en el pecho. Corre, sal
 | Moverse | ← → o A / D | ◀ ▶ |
 | Saltar / nadar (brazada) | Espacio, ↑, W o Z | A |
 | Correr | Shift o X | B |
-| Entrar a una tubería | ↓ o S | ▼ |
+| Entrar a una tubería o puerta | ↓ o S | ▼ |
 | Lanzar estaca (mundo 5) | F, C o E | ⚔ |
 | Pausa | P | — |
 | Empezar / confirmar | Enter | Tocar la pantalla |
@@ -48,9 +48,9 @@ En el mapa de mundos se elige nivel con ← → y Enter, o tocando el nivel.
 - **Punto de control:** una bandera a mitad de nivel; si pierdes una vida reapareces ahí.
 - **Compartir:** al terminar la partida aparecen botones para copiar el resultado o enviarlo por WhatsApp.
 
-### Niveles con personalidad (rediseño en curso)
+### Niveles con personalidad
 
-Los mundos 1, 2 y 3 ya tienen una mecánica propia por nivel; los mundos 4 y 5 se rediseñarán igual.
+Cada nivel tiene una mecánica propia que lo distingue.
 
 - **1‑1 Colinas y trampolines:** terreno con colinas, hongos que hacen rebotar alto y final con girasol gigante y molino.
 - **1‑2 Puentes sobre barrancos:** puentes de madera que se caen al pisarlos, dragones vigía en plataformas altas y final en una torre.
@@ -61,6 +61,12 @@ Los mundos 1, 2 y 3 ya tienen una mecánica propia por nivel; los mundos 4 y 5 s
 - **3‑1 Arrecife:** burbujas gigantes que te atrapan y te suben, y almejas que se abren con una perla dentro (y muerden al cerrarse).
 - **3‑2 Barco hundido:** se entra por un hueco del casco; camarotes con cofres, anclas que se balancean y una bodega secreta con el warp al 0‑3.
 - **3‑3 Fosa abisal:** oscuridad total con un círculo de luz alrededor de Bolo, anémonas luminosas y peces linterna.
+- **4‑1 Pendientes de hielo:** bajadas donde Bolo se desliza tomando velocidad y rampas que lo lanzan sobre los barrancos.
+- **4‑2 Cueva de cristal:** estalactitas que caen cuando pasas debajo, bloques de hielo que se agrietan al pisarlos y se rompen a la segunda, y una cámara secreta en el techo con el warp al 0‑4.
+- **4‑3 Ventisca en la cima:** ráfagas de viento, plataformas de nube y bolas de nieve gigantes que ruedan hacia ti.
+- **5‑1 Cementerio:** manos que salen de las tumbas y lápidas que se pueden empujar y usar de escalón.
+- **5‑2 Mansión embrujada:** dos plantas unidas por puertas (↓ para entrar), cuadros que te siguen con la mirada, candelabros que caen y un cuarto secreto con el warp al 0‑5.
+- **5‑3 Castillo del Conde:** péndulos con cuchilla, pasillos con picos y ataúdes de donde salen vampiros.
 - **Objetos ocultos:** bloques invisibles con monedas o vidas (sueltan un destello de vez en cuando) y paredes falsas con una grieta que esconden cuartos con monedas.
 
 ### Enemigos con reglas especiales
