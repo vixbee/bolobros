@@ -48,6 +48,15 @@ En el mapa de mundos se elige nivel con ← → y Enter, o tocando el nivel.
 - **Punto de control:** una bandera a mitad de nivel; si pierdes una vida reapareces ahí.
 - **Compartir:** al terminar la partida aparecen botones para copiar el resultado o enviarlo por WhatsApp.
 
+### Niveles con personalidad (rediseño en curso)
+
+El mundo 1 ya tiene una mecánica propia por nivel; los mundos 2 a 5 se rediseñarán igual.
+
+- **1‑1 Colinas y trampolines:** terreno con colinas, hongos que hacen rebotar alto y final con girasol gigante y molino.
+- **1‑2 Puentes sobre barrancos:** puentes de madera que se caen al pisarlos, dragones vigía en plataformas altas y final en una torre.
+- **1‑3 Torre nocturna:** plataformas móviles, un elevador para subir la torre y un tramo a oscuras alumbrado por antorchas.
+- **Objetos ocultos:** bloques invisibles con monedas o vidas (sueltan un destello de vez en cuando) y paredes falsas con una grieta que esconden cuartos con monedas.
+
 ### Enemigos con reglas especiales
 
 - **Cactus, medusas y erizos** tienen espinas: no se pueden pisar, solo se vencen con la estrella.
