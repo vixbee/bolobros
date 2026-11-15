@@ -271,7 +271,7 @@ function medal(name){medalMsg='★ ¡MEDALLA: '+name+'! ★';medalT=220;sfx.meda
 function stompCombo(e){const p=player;p.combo=(p.combo||0)+1;p.comboT=200;const c=p.combo,pts=Math.min(1600,100*2**(c-1));score+=pts;sfx.stomp();
   if(c>1)tone(330*Math.pow(1.122,c*2),.16,'square',.06);popup(e.x,e.y-10,c>1?'x'+c+' '+pts:''+pts);
   if(c===6){lives++;popup(e.x,e.y-28,'1UP');sfx.power()}}
-const SHARE_URL='https://bolobros.netlify.app/';
+const SHARE_URL='https://vixbee.github.io/bolobros/';
 function shareMsg(){return '🎮 Bolo Bros: llegué al mundo '+lvl+' con '+score+' puntos y '+medalCount()+'/45 medallas ★. ¿Me superas?'}
 function shareText(){return shareMsg()+' '+SHARE_URL}
 function persist(){try{localStorage.setItem('bolobros_save',JSON.stringify(SAVE))}catch(e){}}

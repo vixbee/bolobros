@@ -1,6 +1,6 @@
 # Bolo Bros
 
-**▶ Jugar ahora: https://bolobros.netlify.app/**
+**▶ Jugar ahora: https://vixbee.github.io/bolobros/**
 
 Plataformero web de estilo clásico con personaje, niveles, gráficos y música originales. Se juega en el navegador, en computadora o celular, sin instalar nada.
 
@@ -125,17 +125,18 @@ python3 -m http.server 8000
 # abre http://localhost:8000
 ```
 
-### Netlify (como está publicado este proyecto)
-
-1. En [app.netlify.com](https://app.netlify.com): **Add new site → Import an existing project → GitHub** y elige este repositorio.
-2. Configuración: rama `main`, **Build command** vacío, **Publish directory** vacío o `.`.
-3. Cada `git push` a `main` publica la nueva versión automáticamente.
-
-### GitHub Pages
+### GitHub Pages (como está publicado este proyecto)
 
 1. En el repositorio: **Settings → Pages**.
 2. En *Source* elige **Deploy from a branch**, rama `main`, carpeta `/ (root)`.
 3. El juego queda en `https://vixbee.github.io/bolobros/`.
+
+### Netlify
+
+1. En [app.netlify.com](https://app.netlify.com): **Add new site → Import an existing project → GitHub** y elige este repositorio.
+2. Configuración: rama `main`, **Build command** vacío, **Publish directory** vacío o `.`.
+3. Cada `git push` a `main` publica la nueva versión automáticamente.
+4. El plan gratuito limita los deploys de producción por mes; al pasarse, el sitio sigue en línea pero deja de actualizarse hasta el siguiente periodo.
 
 ### Otras opciones
 
