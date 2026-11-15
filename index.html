@@ -983,7 +983,7 @@ function updateEnemies(){
   }
   enemies=enemies.filter(e=>!e.gone);
 }
-const BK={dragon:{col:['#b5172b','#6d0f1a','#ff6b6b'],w:60,h:60,name:'DRAGÓN MAYOR'},scorpion:{col:['#e0a526','#a8770a','#ffe08a'],w:70,h:48,name:'REY ESCORPIÓN',say:'Peluche en el estuche!!!'},octopus:{col:['#c2185b','#7a0e3a','#ff8fc8'],w:80,h:80,name:'PULPO GIGANTE',say:'Va a caerte la del pulpi!!!'},count:{col:['#7b1fa2','#1a0b2e','#e63946'],w:52,h:76,name:'CONDE COLMILLO',hp:5,say:'Sentiste mello !!!!'},yeti:{col:['#ffffff','#9cc4e4','#eaf6ff'],w:64,h:72,name:'YETI DE LAS NIEVES',say:'WARRRRRRR!!!'}};
+const BK={dragon:{col:['#b5172b','#6d0f1a','#ff6b6b'],w:60,h:60,name:'DRAGÓN MAYOR',say:'Dracarys !!!'},scorpion:{col:['#e0a526','#a8770a','#ffe08a'],w:70,h:48,name:'REY ESCORPIÓN',say:'Peluche en el estuche!!!'},octopus:{col:['#c2185b','#7a0e3a','#ff8fc8'],w:80,h:80,name:'PULPO GIGANTE',say:'Va a caerte la del pulpi!!!'},count:{col:['#7b1fa2','#1a0b2e','#e63946'],w:52,h:76,name:'CONDE COLMILLO',hp:5,say:'Sentiste mello !!!!'},yeti:{col:['#ffffff','#9cc4e4','#eaf6ff'],w:64,h:72,name:'YETI DE LAS NIEVES',say:'WARRRRRRR!!!'}};
 function spawnBoss(kind){
   const k=BK[kind];
   boss={type:'boss',kind,say:k.say,sayT:k.say?260:0,col:k.col,name:k.name,x:LW*T-k.w-48,y:kind==='octopus'?6*T:13*T-k.h,by:6*T,w:k.w,h:k.h,vx:-1.2,vy:0,hp:k.hp||3,max:k.hp||3,inv:0,cd:90,shootT:0,active:true,onGround:false,dead:false};
