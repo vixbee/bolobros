@@ -79,6 +79,10 @@ Cada nivel tiene una mecánica propia que lo distingue.
 
 - **Tuberías secretas:** en cada nivel normal, 3 tuberías elegidas al azar en cada partida tienen un brillo intermitente. Con ↓ llevan a un cuarto donde las monedas forman frases misteriosas; su tubería de salida lleva a un segundo cuarto que cambia: contrarreloj de monedas, acertijo de memoria con tres bloques o un guardián al que hay que vencer.
 - **Cofre del tesoro:** aparece en el tercer cuarto secreto de un nivel y da +5 vidas.
+- **Llave y bóveda:** casi todos los niveles normales tienen una bóveda dorada cerrada con un cofre de +3 vidas y 20 monedas. La llave está en un bloque invisible que suelta un destello dorado.
+- **Enredadera secreta:** en los niveles al aire libre hay un ladrillo con una hoja; al golpearlo crece una enredadera (se sube con saltar) hasta una nube llena de monedas.
+- **Tesoro del mundo:** cada nivel esconde un objeto de su mundo (flor, escarabajo, perla, copo o murciélago de plata) en su cuarto oculto. Juntar los 3 de un mundo da +1 vida inicial para siempre; con los 5 mundos, la bufanda queda dorada.
+- **Slime dorado:** aparece de vez en cuando, huye de Bolo y da 20 monedas si lo atrapas.
 - **Warp zones:** hay rutas ocultas con un bloque invisible o una cámara escondida cerca del final de los niveles 1‑3, 2‑2, 3‑2, 4‑2 y 5‑2. Llevan a los mundos secretos 0‑1, 0‑2, 0‑3, 0‑4 y 0‑5.
 - **Mundos secretos:** cada uno es distinto. 0‑1: 40 segundos para juntar todo con trampolines. 0‑2: tumba del faraón con dos puertas e interruptores y cofres. 0‑3: Bolo viaja en una burbuja que avanza sola; si la revientan, termina el nivel. 0‑4: tobogán de hielo sin frenos. 0‑5: fantasmas amistosos sobre los que se rebota para alcanzar cofres.
 - **Código secreto:** escribir `BOLO` en la portada o en el mapa (o tocar 5 veces el título "MAPA DE MUNDOS" en el celular) desbloquea todos los niveles.
