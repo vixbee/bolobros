@@ -35,7 +35,7 @@ En el mapa de mundos se elige nivel con ← → y Enter, o tocando el nivel.
 
 ### Objetos
 
-- **Monedas:** 100 monedas dan una vida.
+- **Monedas:** 100 monedas dan una vida. Las monedas grandes con la B además hacen crecer a Bolo.
 - **Baya roja:** Bolo crece, rompe ladrillos y aguanta un golpe.
 - **Estrella:** 14 segundos de invencibilidad, con música propia.
 - **Estaca:** se recoge al inicio de cada nivel del mundo 5 y se lanza con F (o ⚔ en el celular). Es lo único que vence a fantasmas y vampiros.
@@ -54,7 +54,7 @@ Cada nivel tiene una mecánica propia que lo distingue.
 
 - **1‑1 Colinas y trampolines:** terreno con colinas, hongos que hacen rebotar alto y final con girasol gigante y molino.
 - **1‑2 Puentes sobre barrancos:** puentes de madera que se caen al pisarlos, dragones vigía en plataformas altas y final en una torre.
-- **1‑3 Torre nocturna:** plataformas móviles, un elevador para subir la torre y un tramo a oscuras alumbrado por antorchas.
+- **1‑3 Torre nocturna:** plataformas móviles, un elevador para subir la torre y antorchas en el camino.
 - **2‑1 Arenas movedizas y oasis:** pozas donde te hundes si no saltas, palmeras a las que te subes y final con cocotero y carpa.
 - **2‑2 Interior de la pirámide:** pasillos cerrados, bloques de piedra que caen del techo, un interruptor que abre una puerta y una cámara secreta en el techo con el warp al 0‑2.
 - **2‑3 Tormenta de arena:** ráfagas de viento que te empujan y tapan la vista; las columnas de las ruinas te cubren.
@@ -72,7 +72,7 @@ Cada nivel tiene una mecánica propia que lo distingue.
 ### Enemigos con reglas especiales
 
 - **Cactus, medusas y erizos** tienen espinas: no se pueden pisar, solo se vencen con la estrella.
-- **Tiburón:** no se puede vencer pisándolo. Gruñe, embiste en línea recta y se pasa de largo; al tocarle la cola se encoge, se pone gris y se va dormido.
+- **Tiburón:** no se puede vencer pisándolo. Gruñe, embiste en línea recta y se pasa de largo; al tocarle la cola se pone amarillo y se hunde hasta salir de la pantalla.
 - **Jefes:** se vencen con 3 pisotones y se vuelven más agresivos con cada golpe.
 
 ### Secretos
