@@ -31,6 +31,7 @@ En el mapa de mundos se elige nivel con ← → y Enter, o tocando el nivel.
 | 3 · Océano | 3‑1, 3‑2, 3‑3 | Bajo el agua, corrientes, profundidades | Peces, medusas, erizos, tiburones | Pulpo Gigante |
 | 4 · Nieve | 4‑1, 4‑2, 4‑3 | Día, atardecer, noche; el hielo resbala | Pingüinos, erizos de hielo, búhos, muñecos de nieve que lanzan bolas | Yeti de las Nieves |
 | 5 · Tinieblas | 5‑1, 5‑2, 5‑3 | Cementerio, luna de sangre, castillo | Calaveras, murciélagos, fantasmas, vampiros | Conde Colmillo |
+| Bajo cero · Espacio (secreto) | 0, ‑1, ‑2 | Luna, cinturón de asteroides, nave nodriza | Invasores pixelados, ovnis, meteoros, láseres | Emperador Invasor |
 | Secretos | 0‑1, 0‑2, 0‑3, 0‑4, 0‑5 | Sin enemigos, monedas dobles, vidas extra | — | — |
 
 ### Objetos
@@ -43,7 +44,8 @@ En el mapa de mundos se elige nivel con ← → y Enter, o tocando el nivel.
 
 ### Medallas, combos y puntos de control
 
-- **Medallas:** cada nivel normal tiene 3 (45 en total): terminar el nivel, juntar las 3 monedas grandes con la letra B y encontrar los 3 cuartos secretos. Se ven como estrellas en el mapa.
+- **Medallas:** cada nivel normal tiene 3 (54 en total, contando la zona bajo cero): terminar el nivel, juntar las 3 monedas grandes con la letra B y encontrar los 3 cuartos secretos. Se ven como estrellas en el mapa.
+- **Zona bajo cero:** al empezar el 1‑1 regresa a la izquierda y brinca: aparece un bloque escondido y, en diagonal a 45°, cuatro más. El último hace crecer una enredadera; súbela para llegar a los niveles 0, ‑1 y ‑2, con gravedad ligera. Al vencer al Emperador Invasor se abre una Warp Zone con tuberías a los mundos 2, 3, 4 y 5.
 - **Combos:** pisar enemigos seguidos sin tocar el suelo duplica los puntos cada vez (100, 200, 400…) con un sonido que sube de tono; el sexto da una vida.
 - **Punto de control:** una bandera a mitad de nivel; si pierdes una vida reapareces ahí.
 - **Compartir:** al terminar la partida aparecen botones para copiar el resultado o enviarlo por WhatsApp.
